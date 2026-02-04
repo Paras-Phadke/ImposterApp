@@ -12,8 +12,10 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.input.motionevent import MotionEvent
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.popup import Popup
@@ -463,6 +465,31 @@ GAME_DATA = {
     ]
 }
 
+# --- Category Icons ---
+# To add icons, place your .png files in an 'assets/icons/' directory
+# and map the category name to the filename here.
+ICONS_DIR = os.path.join(os.path.dirname(__file__), 'assets', 'icons')
+CATEGORY_ICONS = {
+    "Clash Royale": os.path.join(ICONS_DIR, "clash_royale.png"),
+    "Food": os.path.join(ICONS_DIR, "food.png"),
+    "Animals": os.path.join(ICONS_DIR, "animals.png"),
+    "Companies": os.path.join(ICONS_DIR, "companies.png"),
+    "Cars": os.path.join(ICONS_DIR, "cars.png"),
+    "Famous People": os.path.join(ICONS_DIR, "famous_people.png"),
+    "Places": os.path.join(ICONS_DIR, "places.png"),
+    "Sports": os.path.join(ICONS_DIR, "sports.png"),
+    "Movies": os.path.join(ICONS_DIR, "movies.png"),
+    "Occupations": os.path.join(ICONS_DIR, "occupations.png"),
+    "Activities": os.path.join(ICONS_DIR, "activities.png"),
+    "Video Games": os.path.join(ICONS_DIR, "video_games.png"),
+    "Superheroes": os.path.join(ICONS_DIR, "superheroes.png"),
+}
+
+# --- Title Icon ---
+# Define the path for the main title icon
+TITLE_ICON_PATH = os.path.join(ICONS_DIR, "imposter_icon.png")
+
+
 # --- Kivy Language Definition ---
 KV_CODE = """
 #:import hex kivy.utils.get_color_from_hex
@@ -557,12 +584,34 @@ KV_CODE = """
             size: self.size
             radius: [20,]
 
-<CategoryButton@RoundedButton>:
-    font_name: 'Poppins'
-    b_color: 0.6, 0.8, 0.95, 1 # Pastel Blue
+<CategoryButton@ButtonBehavior+BoxLayout>:
+    b_color: 0.6, 0.8, 0.95, 1 # Default Pastel Blue
     height: '50dp'
-    font_size: '18sp'
-    bold: False
+    size_hint_y: None
+    padding: [15, 0, 15, 0]
+    spacing: 15
+    canvas.before:
+        Color:
+            # Darken slightly on press
+            rgba: (self.b_color[0]*0.9, self.b_color[1]*0.9, self.b_color[2]*0.9, self.b_color[3]) if self.state == 'down' else self.b_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
+    Image:
+        source: root.icon_source or ''
+        size_hint_x: None
+        width: self.height * 0.6
+        opacity: 1 if root.icon_source else 0
+        pos_hint: {'center_y': 0.5}
+    Label:
+        text: root.text
+        font_name: 'Poppins'
+        font_size: '18sp'
+        color: 0.2, 0.2, 0.2, 1
+        halign: 'left'
+        valign: 'middle'
+        text_size: self.width, None
 
 <StartScreen>:
     name: 'start'
@@ -1185,7 +1234,7 @@ def upload_saved_games():
         with open(saved_path, "r", encoding="utf-8") as f:
             games = json.load(f) or {}
     except Exception as e:
-        printtologs("Failed to load saved_games.json:", e)
+        printtologs(f"Failed to load saved_games.json:{e}")
         return
 
     if not games:
@@ -1199,7 +1248,7 @@ def upload_saved_games():
             with open(uploaded_path, "r", encoding="utf-8") as f:
                 uploaded_games = json.load(f) or {}
         except Exception as e:
-            printtologs("Warning: could not read saved_uploaded_games.json:", e)
+            printtologs(f"Warning: could not read saved_uploaded_games.json: {e}")
 
     any_uploaded = False
 
@@ -1244,6 +1293,28 @@ class RoundedButton(Button):
     # You might be missing this for radius control
     radius = ListProperty([20])
 
+class CategoryButton(ButtonBehavior, BoxLayout):
+    """A clickable BoxLayout that displays text and an optional icon."""
+    text = StringProperty('')
+    icon_source = StringProperty('')
+    b_color = ListProperty([0.6, 0.8, 0.95, 1]) # Default Pastel Blue
+    category_name = StringProperty('') # To hold the category name for logic
+
+    def on_touch_move(self, touch):
+        # This resolves a Pylance reportIncompatibleMethodOverride error
+        # by explicitly matching the ButtonBehavior signature.
+        return super().on_touch_move(touch)
+
+    def on_touch_down(self, touch: MotionEvent) -> bool:
+        # This resolves a Pylance reportIncompatibleMethodOverride error
+        # by explicitly matching the ButtonBehavior signature.
+        return super().on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        # This resolves a Pylance reportIncompatibleMethodOverride error
+        # by explicitly matching the ButtonBehavior signature.
+        return super().on_touch_up(touch)
+    
 # --- Python Application Logic ---
 class GameState:
     """Singleton class to hold and manage game state."""
@@ -1439,6 +1510,7 @@ class StartScreen(Screen):
     selected_categories = ListProperty([]) # MODIFIED: from category to categories
     hide_imposter_clue = BooleanProperty(False) # ADDED
     is_ready = BooleanProperty(False)
+    title_icon_path = StringProperty('') # Path for the title icon
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -1448,6 +1520,10 @@ class StartScreen(Screen):
         self.bind(joker_count_str=self.check_ready)
         # MODIFIED: Populate categories on entering the screen
         self.on_enter = self.refresh_player_count
+        # Set the icon path, checking if the file exists
+        if os.path.exists(TITLE_ICON_PATH):
+            self.title_icon_path = TITLE_ICON_PATH
+
 
     def refresh_player_count(self, *args):
         """ADD: Called on_enter to update player count label and re-validate."""
@@ -1465,10 +1541,15 @@ class StartScreen(Screen):
         # Clear existing widgets to handle re-entry
         grid.clear_widgets()
 
+        # MODIFIED: Iterate through categories and create buttons with icons
         for category in sorted(GAME_DATA.keys()):
-            # Use Factory to create the custom rounded button defined in KV
-            btn = Factory.CategoryButton(text=category)
+            icon_path = CATEGORY_ICONS.get(category)
+            btn = Factory.CategoryButton(
+                text=category,
+                icon_source=icon_path if icon_path and os.path.exists(icon_path) else ''
+            )
             btn.bind(on_release=self.select_category)
+            btn.category_name = category  # Store the category name on the button itself
             grid.add_widget(btn)
 
         # Re-highlight all previously selected categories
@@ -1476,7 +1557,7 @@ class StartScreen(Screen):
 
     def select_category(self, button):
         """MODIFIED: Handles category button presses by adding/removing from list."""
-        category_name = button.text
+        category_name = button.category_name
         if category_name in self.selected_categories:
             self.selected_categories.remove(category_name)
         else:
@@ -1488,7 +1569,7 @@ class StartScreen(Screen):
     def highlight_categories(self):
         """Updates the button color based on selection."""
         for widget in self.ids.category_grid.children:
-            if widget.text in self.selected_categories:
+            if widget.category_name in self.selected_categories:
                 # Pastel Gold for selected
                 widget.b_color = [0.95, 0.85, 0.5, 1] 
             else:
