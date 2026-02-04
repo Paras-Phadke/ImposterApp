@@ -1223,11 +1223,11 @@ def wake_backend():
 def upload_saved_games():
     user_id = get_device_user_id()
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    saved_path = os.path.join(base_dir,"/data/","saved_games.json")
-    uploaded_path = os.path.join(base_dir,"/data/", "saved_uploaded_games.json")
+    saved_path = os.path.join(base_dir,"data","saved_games.json")
+    uploaded_path = os.path.join(base_dir,"data", "saved_uploaded_games.json")
 
     if not os.path.exists(saved_path):
-        printtologs("No saved games to upload")
+        printtologs("No saved games to upload(file not found)")
         return
 
     try:
@@ -1238,7 +1238,7 @@ def upload_saved_games():
         return
 
     if not games:
-        printtologs("No saved games to upload")
+        printtologs("No saved games to upload (no games)")
         return
 
     # Load previously uploaded games (if any)
