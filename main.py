@@ -1892,6 +1892,11 @@ class DebugScreen(Screen):
 
     def on_enter(self, *args):
         self.load_debug_info()
+        
+    def on_leave(self, *args):
+        if self.ids.logs_input.focus:
+            self.ids.logs_input.focus = False
+    
 
     def load_debug_info(self):
         base_dir = os.path.dirname(os.path.abspath(__file__))
