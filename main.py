@@ -1232,7 +1232,7 @@ UPLOAD_URL = f"{RENDER_URL}/upload"
 WAKE_URL = f"{RENDER_URL}/health"
     
 def get_device_user_id():
-    store = JsonStore("assets//device.json")
+    store = JsonStore("data//device.json")
     if not store.exists("user_id"):
         store.put("user_id", value=str(uuid.uuid4()))
     return store.get("user_id")["value"]
