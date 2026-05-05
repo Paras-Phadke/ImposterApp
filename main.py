@@ -43,6 +43,62 @@ LabelBase.register(
     fn_italic=os.path.join(font_dir, 'Poppins-Italic.ttf'),
 )
 
+# --- Question Mode Data ---
+QDATA = {
+    "Questions": [
+        {"crewmate_q": "What's the worst thing to happen on a first date?", "imposter_q": "What's the worst thing to happen during a job interview?"},
+        {"crewmate_q": "If you could eat only one food for the rest of your life, what would it be?", "imposter_q": "What is your ultimate late-night junk food craving?"},
+        {"crewmate_q": "What is the most annoying habit a roommate can have?", "imposter_q": "What is the most annoying thing a younger sibling can do?"},
+        {"crewmate_q": "Where is the best place to hide during a zombie apocalypse?", "imposter_q": "Where is the best place to hide during a game of hide-and-seek?"},
+        {"crewmate_q": "What's a minor inconvenience that completely ruins your day?", "imposter_q": "What's a minor injury that hurts way more than it should?"},
+        {"crewmate_q": "What's the best excuse for being late to a party?", "imposter_q": "What's the best excuse for getting out of a speeding ticket?"},
+        {"crewmate_q": "If you had a warning label on your forehead, what would it say?", "imposter_q": "If you had a slogan for a new energy drink, what would it be?"},
+        {"crewmate_q": "What is the most overrated superpower?", "imposter_q": "What is the most useless hidden talent you can have?"},
+        {"crewmate_q": "What is a highly controversial food opinion you hold?", "imposter_q": "What is a popular movie that you think is actually terrible?"},
+        {"crewmate_q": "What is the most embarrassing phase you went through as a teenager?", "imposter_q": "What is your most irrational fear?"},
+        {"crewmate_q": "If animals could talk, which one would be the rudest?", "imposter_q": "Which animal do you think is secretly plotting world domination?"},
+        {"crewmate_q": "What's the absolute worst text message to receive?", "imposter_q": "What's the worst thing to hear right before surgery?"},
+        {"crewmate_q": "If you had to haunt someone as a ghost, how would you slightly annoy them?", "imposter_q": "If you could be invisible for a day, what prank would you pull?"},
+        {"crewmate_q": "What is the most ridiculous thing you’ve ever spent money on?", "imposter_q": "What is the weirdest gift you've ever received?"},
+        {"crewmate_q": "What's a weird smell that you actually really enjoy?", "imposter_q": "What's a food that tastes good but smells absolutely awful?"},
+        {"crewmate_q": "If you were arrested with no explanation, what would your friends assume you did?", "imposter_q": "If you went viral on the internet tomorrow, what would it probably be for?"},
+        {"crewmate_q": "What's the absolute worst piece of advice you've ever been given?", "imposter_q": "What's a social rule you always secretly break?"},
+        {"crewmate_q": "What is the worst time to accidentally start laughing?", "imposter_q": "What is the most awkward situation to get caught daydreaming in?"},
+        {"crewmate_q": "If your life was a TV show, what would the theme song be?", "imposter_q": "What is the ultimate hype song to play before a big game?"},
+        {"crewmate_q": "What is the best way to gently reject someone?", "imposter_q": "What is the best way to get out of a boring conversation?"},
+        {"crewmate_q": "What is the best way to spend a rainy Sunday indoors?", "imposter_q": "What is the best way to spend a sick day off from work?"},
+        {"crewmate_q": "What is your favorite attraction at a theme park?", "imposter_q": "What is the most terrifying ride at a rundown carnival?"},
+        {"crewmate_q": "What is the most stressful part of traveling abroad?", "imposter_q": "What is the absolute worst part of a morning commute?"},
+        {"crewmate_q": "If you could teleport anywhere right now, where would it be?", "imposter_q": "Where is your ultimate dream vacation destination?"},
+        {"crewmate_q": "What is a household chore that you absolutely despise doing?", "imposter_q": "What is the most tedious part of your morning routine?"},
+        {"crewmate_q": "What is the best topping to put on a homemade pizza?", "imposter_q": "What is the most underrated ingredient to put in a sandwich?"},
+        {"crewmate_q": "What is a skill you wish you could download into your brain instantly?", "imposter_q": "What is a hobby you wish your parents forced you to learn as a kid?"},
+        {"crewmate_q": "What is the absolute worst thing to forget when packing for a vacation?", "imposter_q": "What is the most stressful item to lose when you're out in public?"},
+        {"crewmate_q": "What is the best dessert to bring to a fancy dinner party?", "imposter_q": "What is your go-to comfort food when you've had a terrible day?"},
+        {"crewmate_q": "If you had to change your first name, what would you choose?", "imposter_q": "What is the most common name for a golden retriever?"},
+        {"crewmate_q": "What is the most annoying thing a stranger can do in a movie theater?", "imposter_q": "What is the most annoying thing a passenger can do on an airplane?"},
+        {"crewmate_q": "What is the very first thing you would buy if you won the lottery?", "imposter_q": "If you could get any luxury item for free, what would it be?"},
+        {"crewmate_q": "What is a fashion trend you are so glad is finally over?", "imposter_q": "What is something you wore in middle school that makes you cringe now?"},
+        {"crewmate_q": "What is the best way to physically relax after a long, hard day?", "imposter_q": "What is the best way to recover the day after a really tough workout?"},
+        {"crewmate_q": "What is the worst lie you ever told your parents growing up?", "imposter_q": "What is the biggest secret you ever kept from your best friend?"},
+        {"crewmate_q": "What is the most comfortable piece of clothing you own?", "imposter_q": "What is the first thing you put on when you feel a cold coming on?"},
+        {"crewmate_q": "What is the most impressive trick you could teach a highly trained dog?", "imposter_q": "What is a cool party trick you wish you could casually pull off?"},
+        {"crewmate_q": "What is the most annoying insect to deal with in the summer?", "imposter_q": "What animal are you most terrified to unexpectedly find in your house?"},
+        {"crewmate_q": "What is the absolute worst flavor of ice cream?", "imposter_q": "What is the most disgusting artificial flavor for cough syrup?"},
+        {"crewmate_q": "What is the single best thing about the winter season?", "imposter_q": "What is the perfect excuse to cancel outdoor plans with friends?"},
+        {"crewmate_q": "If you could live in any fictional universe, which would it be?", "imposter_q": "What movie world would be the most exciting but dangerous to live in?"},
+        {"crewmate_q": "What do you think is the most physically difficult sport to play?", "imposter_q": "What do you think is the absolute most boring sport to watch on TV?"},
+        {"crewmate_q": "What is the most cliché gift to give someone on Valentine's Day?", "imposter_q": "What is the easiest last-minute gift to buy at a gas station?"},
+        {"crewmate_q": "What is the most effective way to wake yourself up when you're exhausted?", "imposter_q": "What is the fastest way to cool down when you are overheating?"},
+        {"crewmate_q": "What is the most terrifying mythical creature from folklore?", "imposter_q": "What is your favorite classic Halloween monster to dress up as?"},
+        {"crewmate_q": "What is the absolute best snack to sneak into a movie theater?", "imposter_q": "What is the most essential snack to pack for a long road trip?"},
+        {"crewmate_q": "What is the most confusing subject to study in high school?", "imposter_q": "What is the hardest academic topic to explain to a five-year-old?"},
+        {"crewmate_q": "What is the worst kind of weather to be stuck outside in?", "imposter_q": "What specific weather condition causes the most traffic accidents?"},
+        {"crewmate_q": "What is the best way to celebrate getting a huge promotion at work?", "imposter_q": "What is the most fun thing to do on a Friday night with friends?"},
+        {"crewmate_q": "What is an everyday sound that instantly makes you feel happy?", "imposter_q": "What is an everyday sound that instantly wakes you up in the morning?"}
+    ]
+}
+
 # --- Game Data (Easy to Add More) ---
 # Each key is a category. The value is a list of word/clue pairs.
 # To add a new category, just add a new dictionary entry.
@@ -999,6 +1055,45 @@ KV_CODE = """
                             size_hint_y: None
                             height: '20dp'
 
+                # Question Mode Checkbox
+                BoxLayout:
+                    size_hint_y: None
+                    height: '56dp'
+                    padding: [0, 0, 0, 0]
+                    spacing: 12
+
+                    CheckBox:
+                        id: question_mode_checkbox
+                        active: root.question_mode
+                        on_active: root.question_mode = self.active
+                        size_hint: None, None
+                        size: '28dp', '28dp'
+                        pos_hint: {'center_y': 0.5}
+                        color: 0.4, 0.6, 0.85, 1
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_x: 1
+                        spacing: 2
+
+                        MainLabel:
+                            text: 'Question Mode'
+                            halign: 'left'
+                            font_size: '16sp'
+                            size_hint_y: None
+                            height: '28dp'
+                            color: 0.4, 0.6, 0.85, 1
+
+                        Label:
+                            text: 'Use questions instead of words/clues'
+                            font_size: '12sp'
+                            color: 0.4, 0.6, 0.85, 1
+                            halign: 'left'
+                            valign: 'middle'
+                            text_size: self.width, self.height
+                            size_hint_y: None
+                            height: '20dp'
+
                 MainLabel:
                     text: 'Select Category:'
                     font_size: '20sp'
@@ -1656,6 +1751,7 @@ class GameState:
         self.current_player_index = 0
         self.game_started = False
         self.hide_imposter_clue = False
+        self.question_mode = False # ADDED
         self.starting_player_id = 1
         self.is_chaos_game = False
         # Track per-category pools so we don't repeat words until exhausted
@@ -1704,6 +1800,13 @@ class GameState:
         # If pop leaves pool empty, it'll be recreated next round
         self.word = word_clue_pair["word"]
         self.clue = word_clue_pair["clue"]
+
+        # --- QUESTION MODE HIJACK ---
+        if getattr(self, 'question_mode', False):
+            q_pair = random.choice(QDATA["Questions"])
+            self.word = q_pair["crewmate_q"]
+            self.clue = q_pair["imposter_q"]
+            self.selected_category = "Question Mode"
 
         # 3. Determine Imposter and Joker IDs
         total = self.total_players
@@ -1785,6 +1888,7 @@ class StartScreen(Screen):
     chaos_mode = BooleanProperty(False)
     selected_categories = ListProperty([]) # MODIFIED: from category to categories
     hide_imposter_clue = BooleanProperty(False) # ADDED
+    question_mode = BooleanProperty(False) # ADDED
     is_ready = BooleanProperty(False)
     title_icon_path = StringProperty('') # Path for the title icon
 
@@ -1916,6 +2020,7 @@ class StartScreen(Screen):
         GAME.joker_count = int(self.joker_count_str)  # FIX: Set joker_count after reset
         GAME.chaos_mode = self.chaos_mode
         GAME.hide_imposter_clue = self.hide_imposter_clue
+        GAME.question_mode = self.question_mode # ADDED
 
         # The game state is reset and set up using the validated properties
         GAME.setup_game(self.selected_categories) # MODIFIED
@@ -2255,6 +2360,7 @@ class ImposterApp(App):
         start_screen.imposter_count_str = "1"
         start_screen.chaos_mode = False
         start_screen.hide_imposter_clue = False # ADDED
+        start_screen.question_mode = False
 
         # Run validation to set up initial is_ready state
         start_screen.validate_settings()
