@@ -1264,7 +1264,7 @@ KV_CODE = """
     BoxLayout:
         orientation: 'vertical'
         padding: 40
-        spacing: 40
+        spacing: 30 # Adjusted slightly for the new label
         canvas.before:
             Color:
                 rgba: 0.98, 0.98, 0.98, 1
@@ -1284,6 +1284,13 @@ KV_CODE = """
             font_size: '24sp'
             size_hint_y: 0.4
             color: 0.2, 0.2, 0.2, 1
+
+        # ADDED: Dynamic label for Question Mode
+        MainLabel:
+            text: root.question_text
+            font_size: '20sp'
+            color: 0.4, 0.6, 0.85, 1 # Pastel blue
+            bold: True
 
         RoundedButton:
             text: 'Reveal Results'
@@ -2133,11 +2140,18 @@ class WordScreen(Screen):
 class DiscussionScreen(Screen):
     """MODIFIED: Screen to signal the discussion phase and who starts."""
     starting_player_text = StringProperty("")
+    question_text = StringProperty("") # ADDED
 
     def on_enter(self, *args):
         """Update results when entering the screen."""
         # MODIFIED: Use player name
         self.starting_player_text = f"{GAME.get_player_name(GAME.starting_player_id)} starts the discussion!"
+        
+        # ADDED: Reveal the question if in Question Mode
+        if getattr(GAME, 'question_mode', False):
+            self.question_text = f"Topic:\n{GAME.word}"
+        else:
+            self.question_text = ""
 
     def go_to_reveal(self):
         """MODIFIED: Moves to the reveal screen without resetting."""
