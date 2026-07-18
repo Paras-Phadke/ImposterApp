@@ -1244,20 +1244,20 @@ KV_CODE = """
                 color: 0.2, 0.2, 0.2, 1
                 size_hint_y: 1
 
-        # MODIFIED: Added Show/Hide button and put both buttons in a layout
+        # MODIFIED: Use a single button that reveals the word first and then advances
         BoxLayout:
             size_hint_y: None
             height: '70dp'
             spacing: 20
             RoundedButton:
-                text: 'Hide' if root.word_visible else 'Show'
-                on_release: root.word_visible = not root.word_visible
+                text: 'Show' if not root.word_visible else 'Next'
+                on_release: root.show_word_or_next()
                 # Pastel Green vs Pastel Green
                 b_color: 0.6, 0.9, 0.6, 1
-            RoundedButton:
-                text: 'Next'
-                on_release: root.next_player()
-                b_color: (0.95, 0.85, 0.5, 1) if root.word_visible else (0.6, 0.8, 0.95, 1) # Pastel Gold vs Pastel Blue
+            # RoundedButton:
+            #     text: 'Next'
+            #     on_release: root.next_player()
+            #     b_color: (0.95, 0.85, 0.5, 1) if root.word_visible else (0.6, 0.8, 0.95, 1) # Pastel Gold vs Pastel Blue
 
 <DiscussionScreen>:
     name: 'discussion'
@@ -2125,6 +2125,13 @@ class WordScreen(Screen):
         self.role_text = role
         self.word_clue_text = text
         self.word_visible = False # ADDED: Ensure word is hidden for new player
+
+    def show_word_or_next(self):
+        """Reveal the current word/clue once, then advance to the next player."""
+        if not self.word_visible:
+            self.word_visible = True
+        else:
+            self.next_player()
 
     def next_player(self):
         """Advances to the next player's view or to the discussion screen."""
